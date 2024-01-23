@@ -87,9 +87,63 @@ posts.forEach((element) => {
                                                 </a>
                                             </div>
                                             <div class="likes__counter">
-                                                Piace a <b id="like-counter-1" class="js-likes-counter">${element.likes}</b> persone
+                                                Piace a <b id="${element.id}" class="js-likes-counter">${element.likes}</b> persone
                                             </div>
                                         </div>
                                     </div>
                                 </div>`
-});
+
+
+})
+
+
+
+
+const likeButtons = document.querySelectorAll('.js-like-button')
+console.log(likeButtons)
+
+likeButtons.forEach(element => {
+
+    element.addEventListener("click", function(){
+
+        event.preventDefault()
+
+        const postId = this.dataset.postid
+        console.log(postId)
+
+        const post = posts.find(post => post.id == postId)
+
+        const isLiked = !post.liked
+        post.liked = isLiked
+
+        console.log(post.liked)
+
+        const likeButtonLabel = this.querySelector('.like-button__label')
+        const likeButtonIcon = this.querySelector('.like-button__icon')
+        const likesCounter = document.getElementById(postId)
+
+
+        if (isLiked) {
+            likeButtonLabel.classList.add('like-button--liked')
+            likeButtonIcon.classList.add('like-button--liked')
+            post.likes++
+        } else {
+            likeButtonLabel.classList.remove('like-button--liked')
+            likeButtonIcon.classList.remove('like-button--liked')
+            post.likes--
+        }
+
+        likesCounter.textContent = post.likes
+        
+        
+    })
+
+})
+
+
+
+
+
+
+
+
